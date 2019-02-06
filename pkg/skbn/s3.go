@@ -143,9 +143,10 @@ func UploadToS3(iClient interface{}, toPath, fromPath string, reader io.Reader) 
 		uploader := s3manager.NewUploader(s)
 
 		_, err := uploader.Upload(&s3manager.UploadInput{
-			Bucket: aws.String(bucket),
-			Key:    aws.String(s3Path),
-			Body:   reader,
+			Bucket:                 aws.String(bucket),
+			Key:                    aws.String(s3Path),
+			ServerSideEncryption:   aws.String("AES256"),
+			Body:                   reader,
 		})
 		if err != nil {
 			if attempt == attempts {
